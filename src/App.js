@@ -10,6 +10,7 @@ import About from "./components/About/About";
 import NotFound from "./components/NotFound/NotFound";
 import Create from "./components/Create/Create";
 import View from "./components/View/View";
+import Edit from "./components/Edit/Edit";
 function App() {
   return (
       <div >
@@ -37,6 +38,11 @@ function App() {
             <Route path='/create' element ={
               <Create/>
             }>
+            </Route>
+            <Route path='/edit/:set' element={
+              <Edit/>
+            }>
+
             </Route>
             <Route path='*' element={<NotFound/>}>
             </Route>

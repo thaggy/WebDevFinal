@@ -4,6 +4,7 @@ import styles from './View.module.css';
 import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Card, Spinner} from "react-bootstrap";
+import {AiOutlineForm} from "react-icons/ai";
 
 const api = axios.create({
     baseURL: 'http://localhost:8000/set'
@@ -16,6 +17,8 @@ function View() {
     const [index, setIndex] = useState(0);
     const [isQuestionSide, setIsQuestionSide] = useState(true);
     const [indexText, setIndexText] = useState('X of X');
+    let navigate = useNavigate()
+
     useEffect(() => {
         api.get(set).then(res=> {
             setFlashCards(res.data);
@@ -56,6 +59,9 @@ function View() {
             setIndex(index+1);
         }
     }
+    function goToEditPage() {
+        navigate("/edit/"+ FlashCards._id, {replace: true})
+    }
     return (
         <div className="container">
             {loading && <div>
@@ -67,6 +73,7 @@ function View() {
             </div>}
             {!loading && FlashCards !== undefined && <div>
                 <div className="h-100 d-flex align-items-center justify-content-center" style={{paddingTop: 30}}>
+
                     <Card
                         bg={'primary'.toLowerCase()}
                         key={'primary'}
@@ -90,7 +97,7 @@ function View() {
                                 {indexText}
                             <button onClick={incrementFlashCards} className={"btn btn-primary btn-sm"}> {">"} </button>
                             </span>
-
+                            <AiOutlineForm onClick={goToEditPage}></AiOutlineForm>
                         </div>
                     </div>
                 </div>
