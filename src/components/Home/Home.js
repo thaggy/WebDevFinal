@@ -11,14 +11,17 @@ function Home() {
     const [Sets, setSets] = useState([]);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
+    const [searchFlag, setSearchFlag] = useState(false);
     let navigate = useNavigate();
 
     function getSetsByName() {
         if (search.length == 0) {
             return;
         }
+        setSearchFlag(false)
         api.get(search).then(res=> {
             setSets(res.data)
+            setSearchFlag(true)
             setLoading(false)
         }).catch(e => {
             console.log(e)
@@ -30,6 +33,7 @@ function Home() {
     }
 
     function onTextBoxChange(e) {
+        setSearchFlag(false)
         setSearch(e.target.value)
     }
 
@@ -64,6 +68,9 @@ function Home() {
                         </div>
                         <br/>
                     </div>)}
+                </div>}
+                {!loading && Sets.length == 0 && searchFlag && <div className={"container"}>
+                    <p>Could Find No Sets With That Name</p>
                 </div>}
             </div>
 
